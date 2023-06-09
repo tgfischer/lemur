@@ -6,7 +6,7 @@ import { RefreshControl, ActivityIndicator } from "react-native";
 import { queryKeys, useGetPostsQuery } from "./api";
 import { PostCard } from "./PostCard";
 
-export const PostListView = (): JSX.Element => {
+export const PostsListScreen = (): JSX.Element => {
   const queryClient = useQueryClient();
 
   const { data, refetch, isRefetching, fetchNextPage, isFetchingNextPage } =
