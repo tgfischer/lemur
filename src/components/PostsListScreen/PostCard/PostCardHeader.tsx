@@ -1,25 +1,23 @@
-import { Link } from "@react-navigation/native";
 import { type PostView } from "lemmy-js-client";
 import { Heading, Column, Row, Text } from "native-base";
 
+import { PostCardLink } from "./PostCardLink";
+
 type PostCardHeaderProps = PostView;
 
-export const PostCardHeader = ({
-  community,
-  post,
-}: PostCardHeaderProps): JSX.Element => {
+export const PostCardHeader = (props: PostCardHeaderProps): JSX.Element => {
   return (
-    <Link to={{ screen: "Post" }}>
+    <PostCardLink view={props}>
       <Column padding={2}>
         <Heading size="sm" fontWeight="semibold">
-          {post.name}
+          {props.post.name}
         </Heading>
         <Row>
           <Text color="muted.600">
-            {community.actor_id.replace("https://", "")}
+            {props.community.actor_id.replace("https://", "")}
           </Text>
         </Row>
       </Column>
-    </Link>
+    </PostCardLink>
   );
 };

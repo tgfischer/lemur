@@ -1,10 +1,11 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { FlatList, Divider, Row } from "native-base";
+import { FlatList, Divider, Row, View } from "native-base";
 import { useMemo } from "react";
 import { RefreshControl, ActivityIndicator } from "react-native";
 
 import { queryKeys, useGetPostsQuery } from "./api";
 import { PostCard } from "./PostCard";
+import { PostCardSkeleton } from "./PostCardSkeleton";
 
 export const PostsListScreen = (): JSX.Element => {
   const queryClient = useQueryClient();
@@ -19,6 +20,20 @@ export const PostsListScreen = (): JSX.Element => {
         posts.findIndex(({ post: post2 }) => post1.ap_id === post2.ap_id) === i,
     );
   }, [data?.pages]);
+
+  if (!data) {
+    return (
+      <View>
+        <PostCardSkeleton />
+        <Divider height={1.5} />
+        <PostCardSkeleton />
+        <Divider height={1.5} />
+        <PostCardSkeleton />
+        <Divider height={1.5} />
+        <PostCardSkeleton />
+      </View>
+    );
+  }
 
   return (
     <FlatList
@@ -36,7 +51,7 @@ export const PostsListScreen = (): JSX.Element => {
       keyExtractor={(item) => item.post.ap_id}
       renderItem={({ item, index }) => (
         <>
-          <PostCard key={item.post.ap_id} item={item} />
+          <PostCard key={item.post.ap_id} view={item} />
           {index < posts.length - 1 && <Divider height={1.5} />}
         </>
       )}

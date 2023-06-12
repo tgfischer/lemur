@@ -2,10 +2,9 @@ import { type PostView } from "lemmy-js-client";
 import { Column, Row, Text, Flex } from "native-base";
 
 import { timeAgo } from "../../../utilities";
+import { IconText } from "../../IconText";
 import { Username } from "../../Username";
-
-import { IconText } from "./IconText";
-import { VoteButton } from "./VoteButton";
+import { DownvoteButton, UpvoteButton } from "../../VoteButtons";
 
 type PostCardFooterProps = PostView;
 
@@ -30,8 +29,8 @@ export const PostCardFooter = ({
       </Row>
     </Column>
     <Row>
-      <VoteButton arrow="up" color="orange" />
-      <VoteButton arrow="down" color="blue" />
+      <UpvoteButton />
+      <DownvoteButton />
     </Row>
   </Flex>
 );

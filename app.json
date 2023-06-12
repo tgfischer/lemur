@@ -11,9 +11,8 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "jsEngine": "hermes",
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },

@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NativeBaseProvider } from "native-base";
 
-import { PostsStackScreen } from "./src/components/PostsStackScreen";
+import { FeedStackScreen } from "./src/components/FeedStackScreen";
 import { colorModeManager, theme } from "./src/theme";
 
 const Tabs = createBottomTabNavigator();
@@ -16,14 +16,14 @@ const App = (): JSX.Element => (
     <NativeBaseProvider theme={theme} colorModeManager={colorModeManager}>
       <NavigationContainer>
         <Tabs.Navigator
-          initialRouteName="Posts"
+          initialRouteName="Feed"
           screenOptions={{ headerShown: false }}
         >
           <Tabs.Screen
-            name="Posts"
-            component={PostsStackScreen}
+            name="Feed"
+            component={FeedStackScreen}
             options={{
-              title: "Posts",
+              title: "Feed",
               tabBarIcon: (props) => <Ionicons {...props} name="ios-home" />,
             }}
           />

@@ -13,11 +13,23 @@
     "eslint.workingDirectories": [{ "mode": "auto" }],
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "react-native.packager.port": 19000
   },
   "extensions": {
-    "recommendations": [
-      "esbenp.prettier-vscode",
-      "dbaeumer.vscode-eslint"
-    ]
+    "recommendations": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Attach to packager",
+        "cwd": "${workspaceFolder}",
+        "type": "reactnative",
+        "request": "attach",
+        "port": 19000,
+        "sourceMaps": true
+      }
+    ],
+    "compounds": []
   }
 }
