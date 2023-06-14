@@ -6,6 +6,19 @@ export const theme = extendTheme({
     useSystemColorMode: true,
     initialColorMode: "dark",
   },
+  fontSizes: {
+    sm: 15,
+    md: 17,
+  },
+  components: {
+    Heading: {
+      baseStyle: ({ colorMode }) => {
+        return {
+          color: colorMode === "dark" ? "white" : "gray.900",
+        };
+      },
+    },
+  },
 });
 
 export const colorModeManager: StorageManager = {

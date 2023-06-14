@@ -1,6 +1,7 @@
+import { PlatformPressable } from "@react-navigation/elements";
 import { Divider, Row, Stack, Text, Box } from "native-base";
 import { type ColorType } from "native-base/lib/typescript/components/types";
-import { memo } from "react";
+import { memo, useState } from "react";
 
 import { type Tree } from "../../../types";
 import { timeAgo } from "../../../utilities";
@@ -33,33 +34,43 @@ const getLeftBorderColor = (level: number): ColorType => {
 };
 
 const CommentInner = ({ tree, level }: CommentProps): JSX.Element => {
+  const [isExpanded, setExpanded] = useState(true);
+
   return (
     <Stack>
-      <Box paddingLeft={2 * level}>
-        <Box
-          borderLeftWidth={level > 0 ? 4 : 0}
-          borderColor={getLeftBorderColor(level)}
-          padding={2}
-        >
-          <Row alignItems="center" justifyContent="space-between">
-            <Username creator={tree.value.creator} />
-            <Row alignItems="center" space={2.5}>
-              <IconText icon="arrow-up">{tree.value.counts.upvotes}</IconText>
-              <IconText icon="arrow-down">
-                {tree.value.counts.downvotes}
-              </IconText>
-              <Text color="muted.600">
-                {timeAgo(tree.value.comment.published)}
-              </Text>
+      <PlatformPressable
+        onPress={() => {
+          setExpanded((isExpanded) => !isExpanded);
+        }}
+      >
+        <Box paddingLeft={2 * level}>
+          <Box
+            borderLeftWidth={level > 0 ? 4 : 0}
+            borderColor={getLeftBorderColor(level)}
+            padding={2}
+          >
+            <Row alignItems="center" justifyContent="space-between">
+              <Username creator={tree.value.creator} />
+              <Row alignItems="center" space={2.5}>
+                <IconText icon="arrow-up">{tree.value.counts.score}</IconText>
+                <Text color="muted.600">
+                  {timeAgo(tree.value.comment.published)}
+                </Text>
+              </Row>
             </Row>
-          </Row>
-          <CommentContent comment={tree.value.comment} />
+            {isExpanded && <CommentContent comment={tree.value.comment} />}
+          </Box>
+          <Divider />
         </Box>
-        <Divider />
-      </Box>
-      {tree.children.map((tree) => (
-        <Comment key={tree.value.comment.ap_id} tree={tree} level={level + 1} />
-      ))}
+      </PlatformPressable>
+      {isExpanded &&
+        tree.children.map((tree) => (
+          <Comment
+            key={tree.value.comment.ap_id}
+            tree={tree}
+            level={level + 1}
+          />
+        ))}
     </Stack>
   );
 };

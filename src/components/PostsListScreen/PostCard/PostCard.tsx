@@ -1,4 +1,4 @@
-import { Box, Stack } from "native-base";
+import { Stack } from "native-base";
 
 import { PostThumbnail } from "../../PostThumbnail";
 
@@ -10,15 +10,13 @@ import { type PostCardProps } from "./types";
 
 export const PostCard = ({ view }: PostCardProps): JSX.Element => {
   return (
-    <Box>
+    <PostCardLink view={view}>
       <Stack>
-        <PostCardLink view={view}>
-          <PostCardHeader {...view} />
-        </PostCardLink>
+        <PostCardHeader {...view} />
         <PostThumbnail {...view} />
         <PostCardBody view={view} />
         <PostCardFooter {...view} />
       </Stack>
-    </Box>
+    </PostCardLink>
   );
 };

@@ -1,26 +1,22 @@
-import { type PostView } from "lemmy-js-client";
-import { Image } from "native-base";
+import { ImageThumbnail } from "./ImageThumbnail";
+import { type PostThumbnailProps } from "./types";
+import { VideoThumbnail } from "./VideoThumbnail";
+import { WebsiteThumbnail } from "./WebsiteThumbnail";
 
-import { PostThumbnailWrapper } from "./PostThumbnailWrapper";
-
-export * from "./PostThumbnailWrapper";
-
-type PostThumbnailProps = PostView;
-
-export const PostThumbnail = ({
-  post,
-}: PostThumbnailProps): JSX.Element | null => {
-  if (!post.thumbnail_url) {
-    return null;
+export const PostThumbnail = (
+  props: PostThumbnailProps,
+): JSX.Element | null => {
+  if (props.post.thumbnail_url) {
+    return <ImageThumbnail {...props} />;
   }
 
-  return (
-    <PostThumbnailWrapper>
-      <Image
-        source={{ uri: post.thumbnail_url }}
-        alt={post.embed_title ?? post.name}
-        resizeMode="contain"
-      />
-    </PostThumbnailWrapper>
-  );
+  if (props.post.embed_title) {
+    return props.post.embed_video_url ? (
+      <VideoThumbnail {...props} />
+    ) : (
+      <WebsiteThumbnail {...props} />
+    );
+  }
+
+  return null;
 };

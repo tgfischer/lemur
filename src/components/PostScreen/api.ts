@@ -4,13 +4,26 @@ import {
   useQuery,
   type UseQueryResult,
 } from "@tanstack/react-query";
-import { LemmyHttp, type PostView, type CommentView } from "lemmy-js-client";
+import {
+  LemmyHttp,
+  type PostView,
+  type CommentView,
+  type ListingType,
+} from "lemmy-js-client";
 
 import { type Tree, type Overwrite } from "../../types";
 
+type GetCommentsParams = {
+  type: ListingType;
+  postId: number;
+  limit: number;
+  maxDepth: number;
+};
+
 export const queryKeys = {
   getPost: (id: number) => ["post", id] as const,
-  getComments: (postId: number) => ["comments", postId] as const,
+  getComments: ({ type, postId, limit, maxDepth }: GetCommentsParams) =>
+    ["comments", postId, type, limit, maxDepth] as const,
 } as const;
 
 type GetPostQueryOptions = {
@@ -99,17 +112,23 @@ export const useGetCommentsQuery = ({
 }: GetCommentsQueryOptions): UseInfiniteQueryResult<
   Array<Tree<CommentViewData>>
 > => {
+  const params: GetCommentsParams = {
+    type: "All",
+    postId,
+    limit: 10,
+    maxDepth: 5,
+  };
   return useInfiniteQuery<Array<Tree<CommentViewData>>>(
-    queryKeys.getComments(postId),
+    queryKeys.getComments(params),
     async ({ pageParam = 1 }) => {
       const http = new LemmyHttp("https://lemmy.ca");
       const result = await http.getComments({
-        post_id: postId,
+        type_: params.type,
+        post_id: params.postId,
+        limit: params.limit,
         page: pageParam,
-        limit: 15,
-        max_depth: 3,
+        max_depth: params.maxDepth,
       });
-
       return toCommentTree(result.comments);
     },
     {

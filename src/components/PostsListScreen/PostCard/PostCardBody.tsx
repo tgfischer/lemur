@@ -3,8 +3,6 @@ import { Box } from "native-base";
 
 import { PostTextBody } from "../../PostTextBody";
 
-import { PostCardLink } from "./PostCardLink";
-
 type PostCardBodyProps = {
   view: PostView;
 };
@@ -17,10 +15,8 @@ export const PostCardBody = ({
   }
 
   return (
-    <PostCardLink view={view}>
-      <Box padding={2}>
-        <PostTextBody {...view} numberOfLines={10} />
-      </Box>
-    </PostCardLink>
+    <Box padding={2}>
+      <PostTextBody {...view} numberOfLines={10} />
+    </Box>
   );
 };

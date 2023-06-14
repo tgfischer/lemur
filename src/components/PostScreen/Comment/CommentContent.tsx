@@ -8,7 +8,6 @@ type CommentContentProps = {
 export const CommentContent = ({
   comment,
 }: CommentContentProps): JSX.Element => {
-  console.log(comment, comment.deleted);
   if (comment.deleted) {
     return (
       <Text color="muted.600" italic>
