@@ -11,7 +11,7 @@ export const MoreActionsButton = (): JSX.Element => {
         <Ionicons
           name="ios-ellipsis-vertical"
           size={20}
-          color={colors.gray[600]}
+          color={colors.gray[100]}
         />
       }
       onPressIn={() => {

@@ -16,7 +16,7 @@ export const VoteButton = ({ arrow, color }: VoteButtonProps): JSX.Element => {
         <Ionicons
           name={`ios-arrow-${arrow}`}
           size={20}
-          color={colors.gray[600]}
+          color={colors.gray[100]}
         />
       }
       onPressIn={() => {

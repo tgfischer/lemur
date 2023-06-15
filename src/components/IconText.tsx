@@ -8,9 +8,9 @@ type IconTextProps = PropsWithChildren<{
 
 export const IconText = ({ icon, children }: IconTextProps): JSX.Element => (
   <Row space={0.5}>
-    <Text color="muted.600">
+    <Text _light={{ color: "muted.600" }}>
       <Ionicons name={`ios-${icon}`} size={15} />
     </Text>
-    <Text color="muted.600">{children}</Text>
+    <Text _light={{ color: "muted.600" }}>{children}</Text>
   </Row>
 );

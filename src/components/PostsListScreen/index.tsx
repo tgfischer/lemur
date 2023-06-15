@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { Divider, Row, View } from "native-base";
+import { Divider, Row } from "native-base";
 import { useRef } from "react";
 import { RefreshControl, ActivityIndicator, FlatList } from "react-native";
 
@@ -7,7 +7,6 @@ import { ReturnToTopButton } from "../ReturnToTopButton";
 
 import { queryKeys, useGetPostsQuery } from "./api";
 import { PostCard } from "./PostCard";
-import { PostCardSkeleton } from "./PostCardSkeleton";
 
 export const PostsListScreen = (): JSX.Element => {
   const flatListRef = useRef<FlatList>(null);
@@ -26,22 +25,8 @@ export const PostsListScreen = (): JSX.Element => {
     sort: "Hot",
   });
 
-  if (isInitialLoading) {
-    return (
-      <View>
-        <PostCardSkeleton />
-        <Divider height={1.5} />
-        <PostCardSkeleton />
-        <Divider height={1.5} />
-        <PostCardSkeleton />
-        <Divider height={1.5} />
-        <PostCardSkeleton />
-      </View>
-    );
-  }
-
   return (
-    <View>
+    <>
       <FlatList
         ref={flatListRef}
         refreshControl={
@@ -65,7 +50,9 @@ export const PostsListScreen = (): JSX.Element => {
         renderItem={({ item, index }) => (
           <>
             <PostCard key={item.post.ap_id} view={item} />
-            {index < data.flattened.length - 1 && <Divider height={1.5} />}
+            {index < data.flattened.length - 1 && (
+              <Divider _dark={{ backgroundColor: "dark.100" }} height={1.5} />
+            )}
           </>
         )}
         onEndReached={() => {
@@ -77,7 +64,7 @@ export const PostsListScreen = (): JSX.Element => {
         }}
         onEndReachedThreshold={0.5}
         ListFooterComponent={
-          isFetchingNextPage ? (
+          isInitialLoading || isFetchingNextPage ? (
             <Row p={2} justifyContent="center">
               <ActivityIndicator />
             </Row>
@@ -89,6 +76,6 @@ export const PostsListScreen = (): JSX.Element => {
           flatListRef.current?.scrollToOffset({ animated: true, offset: 0 })
         }
       />
-    </View>
+    </>
   );
 };

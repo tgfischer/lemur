@@ -10,24 +10,15 @@ export const theme = extendTheme({
     sm: 15,
     md: 17,
   },
-  components: {
-    Heading: {
-      baseStyle: ({ colorMode }) => {
-        return {
-          color: colorMode === "dark" ? "white" : "gray.900",
-        };
-      },
-    },
-  },
 });
 
 export const colorModeManager: StorageManager = {
   get: async () => {
     try {
       const val = await AsyncStorage.getItem("@color-mode");
-      return val === "dark" ? "dark" : "light";
+      return val === "light" ? "light" : "dark";
     } catch (e) {
-      return "light";
+      return "dark";
     }
   },
   set: (value: ColorMode) => {

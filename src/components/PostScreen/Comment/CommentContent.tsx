@@ -10,7 +10,7 @@ export const CommentContent = ({
 }: CommentContentProps): JSX.Element => {
   if (comment.deleted) {
     return (
-      <Text color="muted.600" italic>
+      <Text _light={{ color: "muted.600" }} italic>
         This comment was deleted by the user.
       </Text>
     );
@@ -18,7 +18,7 @@ export const CommentContent = ({
 
   if (comment.removed) {
     return (
-      <Text color="muted.600" italic>
+      <Text _light={{ color: "muted.600" }} italic>
         This comment was deleted by a moderator or administrator.
       </Text>
     );

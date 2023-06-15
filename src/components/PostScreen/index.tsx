@@ -1,6 +1,6 @@
 import { type NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useQueryClient } from "@tanstack/react-query";
-import { Row, View } from "native-base";
+import { Row } from "native-base";
 import { useMemo, useRef } from "react";
 import {
   ActivityIndicator,
@@ -53,7 +53,7 @@ export const PostScreen = ({ route }: PostScreenProps): JSX.Element | null => {
   }
 
   return (
-    <View>
+    <>
       <FlatList
         ref={flatListRef}
         refreshControl={
@@ -88,6 +88,6 @@ export const PostScreen = ({ route }: PostScreenProps): JSX.Element | null => {
           flatListRef.current?.scrollToOffset({ animated: true, offset: 0 })
         }
       />
-    </View>
+    </>
   );
 };

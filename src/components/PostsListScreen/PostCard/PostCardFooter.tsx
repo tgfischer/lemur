@@ -24,7 +24,7 @@ export const PostCardFooter = ({
       <Row alignItems="center" space={2.5}>
         <IconText icon="arrow-up">{counts.score}</IconText>
         <IconText icon="chatbox-outline">{counts.comments}</IconText>
-        <Text color="muted.600">{timeAgo(post.published)}</Text>
+        <Text _light={{ color: "muted.600" }}>{timeAgo(post.published)}</Text>
       </Row>
     </Column>
     <Row>

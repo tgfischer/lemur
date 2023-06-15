@@ -1,6 +1,10 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  DefaultTheme,
+  type Theme,
+} from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NativeBaseProvider } from "native-base";
 
@@ -11,10 +15,23 @@ const Tabs = createBottomTabNavigator();
 
 const queryClient = new QueryClient();
 
+const navigationTheme: Theme = {
+  ...DefaultTheme,
+  dark: true,
+  colors: {
+    ...DefaultTheme.colors,
+    background: theme.colors.dark["50"],
+    primary: theme.colors.darkBlue["500"],
+    card: theme.colors.dark["100"],
+    text: theme.colors.white,
+    border: theme.colors.dark["50"],
+  },
+};
+
 const App = (): JSX.Element => (
   <QueryClientProvider client={queryClient}>
     <NativeBaseProvider theme={theme} colorModeManager={colorModeManager}>
-      <NavigationContainer>
+      <NavigationContainer theme={navigationTheme}>
         <Tabs.Navigator
           initialRouteName="Feed"
           screenOptions={{ headerShown: false }}

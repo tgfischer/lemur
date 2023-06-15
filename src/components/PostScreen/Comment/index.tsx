@@ -53,14 +53,14 @@ const CommentInner = ({ tree, level }: CommentProps): JSX.Element => {
               <Username creator={tree.value.creator} />
               <Row alignItems="center" space={2.5}>
                 <IconText icon="arrow-up">{tree.value.counts.score}</IconText>
-                <Text color="muted.600">
+                <Text _light={{ color: "muted.600" }}>
                   {timeAgo(tree.value.comment.published)}
                 </Text>
               </Row>
             </Row>
             {isExpanded && <CommentContent comment={tree.value.comment} />}
           </Box>
-          <Divider />
+          <Divider _dark={{ backgroundColor: "dark.200" }} />
         </Box>
       </PlatformPressable>
       {isExpanded &&

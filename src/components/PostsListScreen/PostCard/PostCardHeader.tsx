@@ -14,7 +14,7 @@ export const PostCardHeader = (props: PostCardHeaderProps): JSX.Element => {
         </Heading>
         <Stack space={1}>
           <Row>
-            <Text color="muted.600">
+            <Text _light={{ color: "muted.600" }}>
               {props.community.actor_id.replace("https://", "")}
             </Text>
           </Row>

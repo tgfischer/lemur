@@ -13,7 +13,7 @@ export const PostHeader = ({
         {post.name}
       </Heading>
       <Row>
-        <Text color="muted.600">
+        <Text _light={{ color: "muted.600" }}>
           {community.actor_id.replace("https://", "")}
         </Text>
       </Row>
