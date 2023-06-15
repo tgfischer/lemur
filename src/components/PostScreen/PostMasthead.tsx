@@ -1,5 +1,5 @@
 import { type PostView } from "lemmy-js-client";
-import { Column, Divider, Flex, Row, Stack, Text } from "native-base";
+import { Column, Divider, Flex, Row, Stack } from "native-base";
 
 import { timeAgo } from "../../utilities";
 import { IconText } from "../IconText";
@@ -20,9 +20,9 @@ export const PostMasthead = ({ view }: PostMastheadProps): JSX.Element => {
     <Stack>
       <PostHeader {...view} />
       <PostThumbnail {...view} />
-      <PostTextBody {...view} padding={2} />
+      <PostTextBody {...view} padding={2.5} />
       <Flex
-        padding={2}
+        padding={2.5}
         flexDirection="row"
         alignItems="center"
         justifyContent="space-between"
@@ -32,9 +32,9 @@ export const PostMasthead = ({ view }: PostMastheadProps): JSX.Element => {
           <Row alignItems="center" space={2.5}>
             <IconText icon="arrow-up">{view.counts.score}</IconText>
             <IconText icon="chatbox-outline">{view.counts.comments}</IconText>
-            <Text _light={{ color: "muted.600" }}>
+            <IconText icon="time-outline">
               {timeAgo(view.post.published)}
-            </Text>
+            </IconText>
           </Row>
         </Column>
         <Row>

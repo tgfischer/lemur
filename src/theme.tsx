@@ -7,8 +7,8 @@ export const theme = extendTheme({
     initialColorMode: "dark",
   },
   fontSizes: {
-    sm: 15,
-    md: 17,
+    sm: 16,
+    md: 19,
   },
 });
 

@@ -15,7 +15,7 @@ export const PostCardBody = ({
   }
 
   return (
-    <Box padding={2}>
+    <Box padding={2.5}>
       <PostTextBody {...view} numberOfLines={10} />
     </Box>
   );

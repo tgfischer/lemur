@@ -1,5 +1,5 @@
 import { type PostView } from "lemmy-js-client";
-import { Column, Row, Text, Flex } from "native-base";
+import { Column, Row, Flex } from "native-base";
 
 import { timeAgo } from "../../../utilities";
 import { IconText } from "../../IconText";
@@ -14,7 +14,7 @@ export const PostCardFooter = ({
   creator,
 }: PostCardFooterProps): JSX.Element => (
   <Flex
-    padding={2}
+    padding={2.5}
     flexDirection="row"
     alignItems="center"
     justifyContent="space-between"
@@ -24,7 +24,7 @@ export const PostCardFooter = ({
       <Row alignItems="center" space={2.5}>
         <IconText icon="arrow-up">{counts.score}</IconText>
         <IconText icon="chatbox-outline">{counts.comments}</IconText>
-        <Text _light={{ color: "muted.600" }}>{timeAgo(post.published)}</Text>
+        <IconText icon="time-outline">{timeAgo(post.published)}</IconText>
       </Row>
     </Column>
     <Row>

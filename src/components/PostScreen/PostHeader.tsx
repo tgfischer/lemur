@@ -8,7 +8,7 @@ export const PostHeader = ({
   community,
 }: PostHeaderProps): JSX.Element => {
   return (
-    <Column padding={2}>
+    <Column padding={2.5}>
       <Heading size="md" fontWeight="semibold">
         {post.name}
       </Heading>

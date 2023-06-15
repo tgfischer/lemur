@@ -8,13 +8,16 @@ type PostCardHeaderProps = PostView;
 export const PostCardHeader = (props: PostCardHeaderProps): JSX.Element => {
   return (
     <PostCardLink view={props}>
-      <Column padding={2}>
-        <Heading size="sm" fontWeight="semibold">
+      <Column padding={2.5}>
+        <Heading size="md" fontWeight="semibold">
           {props.post.name}
         </Heading>
         <Stack space={1}>
           <Row>
-            <Text _light={{ color: "muted.600" }}>
+            <Text
+              _light={{ color: "muted.600" }}
+              _dark={{ color: "muted.400" }}
+            >
               {props.community.actor_id.replace("https://", "")}
             </Text>
           </Row>

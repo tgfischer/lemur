@@ -1,7 +1,7 @@
-import { PlatformPressable } from "@react-navigation/elements";
 import { useLinkProps } from "@react-navigation/native";
 import { type PostView } from "lemmy-js-client";
 import { type PropsWithChildren } from "react";
+import { TouchableHighlight } from "react-native";
 
 import { ScreenType } from "../../types";
 
@@ -16,8 +16,8 @@ export const PostCardLink = ({
   });
 
   return (
-    <PlatformPressable {...props} onPress={onPress}>
+    <TouchableHighlight {...props} onPress={onPress} delayPressIn={100}>
       {children}
-    </PlatformPressable>
+    </TouchableHighlight>
   );
 };

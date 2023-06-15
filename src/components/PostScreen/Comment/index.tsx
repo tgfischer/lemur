@@ -1,7 +1,7 @@
-import { PlatformPressable } from "@react-navigation/elements";
 import { Divider, Row, Stack, Text, Box } from "native-base";
 import { type ColorType } from "native-base/lib/typescript/components/types";
 import { memo, useState } from "react";
+import { TouchableHighlight } from "react-native";
 
 import { type Tree } from "../../../types";
 import { timeAgo } from "../../../utilities";
@@ -38,7 +38,7 @@ const CommentInner = ({ tree, level }: CommentProps): JSX.Element => {
 
   return (
     <Stack>
-      <PlatformPressable
+      <TouchableHighlight
         onPress={() => {
           setExpanded((isExpanded) => !isExpanded);
         }}
@@ -47,7 +47,7 @@ const CommentInner = ({ tree, level }: CommentProps): JSX.Element => {
           <Box
             borderLeftWidth={level > 0 ? 4 : 0}
             borderColor={getLeftBorderColor(level)}
-            padding={2}
+            padding={2.5}
           >
             <Row alignItems="center" justifyContent="space-between">
               <Username creator={tree.value.creator} />
@@ -62,7 +62,7 @@ const CommentInner = ({ tree, level }: CommentProps): JSX.Element => {
           </Box>
           <Divider _dark={{ backgroundColor: "dark.200" }} />
         </Box>
-      </PlatformPressable>
+      </TouchableHighlight>
       {isExpanded &&
         tree.children.map((tree) => (
           <Comment
