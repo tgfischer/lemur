@@ -1,24 +1,40 @@
+import { type NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Divider, Row } from "native-base";
+import { useRef, useEffect } from "react";
 import { RefreshControl, ActivityIndicator, FlatList } from "react-native";
+
+import { type FeedStackParamList, type ScreenType } from "../types";
 
 import { useGetPostsQuery } from "./api";
 import { PostCard } from "./PostCard";
 
-export const PostsListScreen = (): JSX.Element => {
+export * from "./PostsListHeaderSortButton";
+
+type PostsListScreenProps = NativeStackScreenProps<
+  FeedStackParamList,
+  ScreenType.Posts
+>;
+
+export const PostsListScreen = ({
+  route,
+}: PostsListScreenProps): JSX.Element => {
+  const listRef = useRef<FlatList>(null);
+
   const {
     data,
     isInitialLoading,
     isRefetching,
     fetchNextPage,
     isFetchingNextPage,
-  } = useGetPostsQuery({
-    instanceUrl: "https://lemmy.ca",
-    type: "All",
-    sort: "Hot",
-  });
+  } = useGetPostsQuery(route.params);
+
+  useEffect(() => {
+    listRef.current?.scrollToOffset({ offset: 0, animated: true });
+  }, [route.params]);
 
   return (
     <FlatList
+      ref={listRef}
       refreshControl={
         <RefreshControl refreshing={isRefetching} tintColor="white" />
       }

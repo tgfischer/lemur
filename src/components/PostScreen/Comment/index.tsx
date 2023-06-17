@@ -1,4 +1,4 @@
-import { Divider, Row, Stack, Text, Box } from "native-base";
+import { Divider, Row, Stack, Box } from "native-base";
 import { type ColorType } from "native-base/lib/typescript/components/types";
 import { memo, useState } from "react";
 import { TouchableHighlight } from "react-native";
@@ -52,10 +52,12 @@ const CommentInner = ({ tree, level }: CommentProps): JSX.Element => {
             <Row alignItems="center" justifyContent="space-between">
               <Username creator={tree.value.creator} />
               <Row alignItems="center" space={2.5}>
-                <IconText icon="arrow-up">{tree.value.counts.score}</IconText>
-                <Text _light={{ color: "muted.600" }}>
+                <IconText icon="ios-arrow-up">
+                  {tree.value.counts.score}
+                </IconText>
+                <IconText icon="ios-time-outline">
                   {timeAgo(tree.value.comment.published)}
-                </Text>
+                </IconText>
               </Row>
             </Row>
             {isExpanded && <CommentContent comment={tree.value.comment} />}

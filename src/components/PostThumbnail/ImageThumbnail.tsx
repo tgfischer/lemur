@@ -3,34 +3,38 @@ import { useState } from "react";
 import { ActivityIndicator, ImageBackground, StyleSheet } from "react-native";
 
 import { type PostThumbnailProps } from "./types";
+import { WebsiteLink } from "./WebsiteLink";
 
-export const ImageThumbnail = ({
-  post,
-}: PostThumbnailProps): JSX.Element | null => {
+export const ImageThumbnail = ({ post }: PostThumbnailProps): JSX.Element => {
   const [isLoaded, setLoaded] = useState(false);
   return (
-    <Box
-      borderTopWidth={1}
-      borderTopColor="rgba(0, 0, 0, 0.1)"
-      borderBottomWidth={1}
-      borderBottomColor="rgba(0, 0, 0, 0.1)"
-      backgroundColor="rgba(0, 0, 0, 0.1)"
-    >
-      <AspectRatio w="100%" ratio={4 / 3}>
-        <View flex={1}>
-          <ImageBackground
-            source={{ uri: post.thumbnail_url, cache: "force-cache" }}
-            onLoad={() => {
-              setLoaded(true);
-            }}
-            blurRadius={post.nsfw ? 100 : undefined}
-            style={styles.image}
-          >
-            {!isLoaded && <ActivityIndicator style={{ alignSelf: "center" }} />}
-          </ImageBackground>
-        </View>
-      </AspectRatio>
-    </Box>
+    <WebsiteLink url={post.url}>
+      <Box
+        borderTopWidth={1}
+        borderTopColor="rgba(0, 0, 0, 0.1)"
+        borderBottomWidth={1}
+        borderBottomColor="rgba(0, 0, 0, 0.1)"
+        backgroundColor="rgba(0, 0, 0, 0.1)"
+      >
+        <AspectRatio w="100%" ratio={4 / 3}>
+          <View flex={1}>
+            <ImageBackground
+              source={{ uri: post.url, cache: "force-cache" }}
+              onLoad={() => {
+                setLoaded(true);
+              }}
+              blurRadius={post.nsfw ? 100 : undefined}
+              style={styles.image}
+              resizeMode="contain"
+            >
+              {!isLoaded && (
+                <ActivityIndicator style={{ alignSelf: "center" }} />
+              )}
+            </ImageBackground>
+          </View>
+        </AspectRatio>
+      </Box>
+    </WebsiteLink>
   );
 };
 

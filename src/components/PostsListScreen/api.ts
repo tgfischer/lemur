@@ -15,9 +15,10 @@ import { useMemo } from "react";
 import { type Overwrite } from "../../types";
 
 type GetPostsQueryOptions = {
-  instanceUrl: "https://lemmy.ca";
-  type: ListingType;
+  instanceUrl: string;
+  listingType: ListingType;
   sort: SortType;
+  communityName?: string;
 };
 
 type GetPostsQueryData = InfiniteData<GetPostsResponse> & {
@@ -30,24 +31,26 @@ type GetPostsQueryResult = Overwrite<
 >;
 
 export const queryKeys = {
-  getPosts: ({ instanceUrl, type, sort }: GetPostsQueryOptions) =>
-    ["posts", instanceUrl, type, sort] as const,
+  getPosts: ({ instanceUrl, listingType, sort }: GetPostsQueryOptions) =>
+    ["posts", instanceUrl, listingType, sort] as const,
 } as const;
 
 export const useGetPostsQuery = ({
   instanceUrl,
-  type,
+  listingType,
   sort,
+  communityName,
 }: GetPostsQueryOptions): GetPostsQueryResult => {
   const query = useInfiniteQuery<GetPostsResponse>(
-    queryKeys.getPosts({ instanceUrl, type, sort }),
+    queryKeys.getPosts({ instanceUrl, listingType, sort }),
     async ({ pageParam = 1 }) => {
       const http = new LemmyHttp(instanceUrl);
       return await http.getPosts({
         page: pageParam,
         limit: 10,
-        type_: type,
+        type_: listingType,
         sort,
+        community_name: communityName,
       });
     },
     {

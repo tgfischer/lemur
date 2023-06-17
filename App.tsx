@@ -8,7 +8,10 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NativeBaseProvider } from "native-base";
 
-import { FeedStackScreen } from "./src/components/FeedStackScreen";
+import {
+  FeedStackScreen,
+  ProfileStackScreen,
+} from "./src/components/StackScreens";
 import { colorModeManager, theme } from "./src/theme";
 
 const Tabs = createBottomTabNavigator();
@@ -42,6 +45,16 @@ const App = (): JSX.Element => (
             options={{
               title: "Feed",
               tabBarIcon: (props) => <Ionicons {...props} name="ios-home" />,
+            }}
+          />
+          <Tabs.Screen
+            name="Profile"
+            component={ProfileStackScreen}
+            options={{
+              title: "Profile",
+              tabBarIcon: (props) => (
+                <Ionicons {...props} name="ios-person-outline" />
+              ),
             }}
           />
         </Tabs.Navigator>

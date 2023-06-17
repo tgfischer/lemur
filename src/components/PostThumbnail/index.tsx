@@ -1,22 +1,21 @@
-import { ImageThumbnail } from "./ImageThumbnail";
-import { type PostThumbnailProps } from "./types";
-import { VideoThumbnail } from "./VideoThumbnail";
-import { WebsiteThumbnail } from "./WebsiteThumbnail";
+import { type PostView } from "lemmy-js-client";
+
+import { LoadableThumbnail } from "./LoadableThumbnail";
+import { type UrlPost } from "./types";
+
+type PostThumbnailProps = PostView;
 
 export const PostThumbnail = (
   props: PostThumbnailProps,
 ): JSX.Element | null => {
-  if (props.post.thumbnail_url) {
-    return <ImageThumbnail {...props} />;
+  if (!props.post.url) {
+    return null;
   }
 
-  if (props.post.embed_title) {
-    return props.post.embed_video_url ? (
-      <VideoThumbnail {...props} />
-    ) : (
-      <WebsiteThumbnail {...props} />
-    );
-  }
+  /**
+   * @todo Really shouldn't need to do this, type should be narrows above, but isn't for some reason.
+   */
+  const post = props.post as UrlPost;
 
-  return null;
+  return <LoadableThumbnail {...props} post={post} />;
 };

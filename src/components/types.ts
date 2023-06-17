@@ -1,4 +1,11 @@
-import { type PostView } from "lemmy-js-client";
+import { type Ionicons } from "@expo/vector-icons";
+import {
+  type SortType,
+  type PostView,
+  type ListingType,
+} from "lemmy-js-client";
+
+export type IconType = keyof typeof Ionicons.glyphMap;
 
 export enum ScreenType {
   Posts = "Posts",
@@ -6,6 +13,11 @@ export enum ScreenType {
 }
 
 export type FeedStackParamList = {
-  Posts: undefined;
+  Posts: {
+    instanceUrl: string;
+    listingType: ListingType;
+    sort: SortType;
+    communityName?: string;
+  };
   Post: { view: PostView };
 };

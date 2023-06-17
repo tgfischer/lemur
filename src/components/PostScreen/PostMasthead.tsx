@@ -30,9 +30,11 @@ export const PostMasthead = ({ view }: PostMastheadProps): JSX.Element => {
         <Column>
           <Username creator={view.creator} />
           <Row alignItems="center" space={2.5}>
-            <IconText icon="arrow-up">{view.counts.score}</IconText>
-            <IconText icon="chatbox-outline">{view.counts.comments}</IconText>
-            <IconText icon="time-outline">
+            <IconText icon="ios-arrow-up">{view.counts.score}</IconText>
+            <IconText icon="ios-chatbox-outline">
+              {view.counts.comments}
+            </IconText>
+            <IconText icon="ios-time-outline">
               {timeAgo(view.post.published)}
             </IconText>
           </Row>

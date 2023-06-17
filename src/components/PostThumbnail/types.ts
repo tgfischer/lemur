@@ -1,3 +1,7 @@
-import { type PostView } from "lemmy-js-client";
+import { type Post, type PostView } from "lemmy-js-client";
 
-export type PostThumbnailProps = PostView;
+import { type Overwrite, type SetRequired } from "../../types";
+
+export type UrlPost = SetRequired<Post, "url">;
+
+export type PostThumbnailProps = Overwrite<PostView, { post: UrlPost }>;
