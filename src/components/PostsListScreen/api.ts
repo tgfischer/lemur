@@ -12,6 +12,7 @@ import {
 } from "lemmy-js-client";
 import { useMemo } from "react";
 
+import { useRefresh } from "../../hooks";
 import { type Overwrite } from "../../types";
 
 type GetPostsQueryOptions = {
@@ -27,7 +28,7 @@ type GetPostsQueryData = InfiniteData<GetPostsResponse> & {
 
 type GetPostsQueryResult = Overwrite<
   UseInfiniteQueryResult<GetPostsResponse>,
-  { data: GetPostsQueryData }
+  { data: GetPostsQueryData; refetch: () => Promise<void> }
 >;
 
 export const queryKeys = {
@@ -58,6 +59,8 @@ export const useGetPostsQuery = ({
     },
   );
 
+  const { isRefreshing, handleRefresh } = useRefresh(query.refetch);
+
   const data = useMemo<GetPostsQueryData>(() => {
     if (!query.data) {
       return { pages: [], flattened: [], pageParams: [] };
@@ -75,5 +78,5 @@ export const useGetPostsQuery = ({
     };
   }, [query.data]);
 
-  return { ...query, data };
+  return { ...query, data, refetch: handleRefresh, isRefetching: isRefreshing };
 };

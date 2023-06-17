@@ -23,9 +23,11 @@ export const PostsListScreen = ({
   const {
     data,
     isInitialLoading,
-    isRefetching,
-    fetchNextPage,
+    isFetching,
+    isLoading,
     isFetchingNextPage,
+    fetchNextPage,
+    refetch,
   } = useGetPostsQuery(route.params);
 
   useEffect(() => {
@@ -36,7 +38,13 @@ export const PostsListScreen = ({
     <FlatList
       ref={listRef}
       refreshControl={
-        <RefreshControl refreshing={isRefetching} tintColor="white" />
+        <RefreshControl
+          refreshing={isFetching || isLoading || isFetchingNextPage}
+          tintColor="white"
+          onRefresh={() => {
+            void refetch();
+          }}
+        />
       }
       data={data.flattened}
       keyExtractor={(item) => item.post.ap_id}
