@@ -1,5 +1,5 @@
 import { type NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Divider, Row } from "native-base";
+import { Divider, Row, useColorMode } from "native-base";
 import { useRef, useEffect } from "react";
 import { RefreshControl, ActivityIndicator, FlatList } from "react-native";
 
@@ -18,6 +18,8 @@ type PostsListScreenProps = NativeStackScreenProps<
 export const PostsListScreen = ({
   route,
 }: PostsListScreenProps): JSX.Element => {
+  const theme = useColorMode();
+
   const listRef = useRef<FlatList>(null);
 
   const {
@@ -34,13 +36,16 @@ export const PostsListScreen = ({
     listRef.current?.scrollToOffset({ offset: 0, animated: true });
   }, [route.params]);
 
+  const colorMode = theme.colorMode === "dark" ? "white" : "default";
+
   return (
     <FlatList
       ref={listRef}
+      indicatorStyle={colorMode}
       refreshControl={
         <RefreshControl
           refreshing={isFetching || isLoading || isFetchingNextPage}
-          tintColor="white"
+          tintColor={colorMode}
           onRefresh={() => {
             void refetch();
           }}
