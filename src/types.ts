@@ -1,4 +1,4 @@
-import { type Person } from "lemmy-js-client";
+import { type GetSiteResponse } from "lemmy-js-client";
 
 export type Overwrite<T, R> = Omit<T, keyof R> & R;
 
@@ -12,5 +12,8 @@ export type Tree<TValue> = {
 
 export type AccountData = {
   jwt: string;
-  user: Person;
+  instanceUrl: string;
+  username: string;
 };
+
+export type UserData = SetRequired<GetSiteResponse, "my_user">;

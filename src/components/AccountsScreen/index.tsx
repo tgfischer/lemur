@@ -1,37 +1,31 @@
-import { useNavigation } from "@react-navigation/native";
-import { type NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ScrollView, Button, Column } from "native-base";
+import { ScrollView, Column } from "native-base";
+import { ActivityIndicator } from "react-native";
 
+import { useUsersQuery } from "../../api";
 import { useAccounts } from "../../hooks";
-import { ScreenType, type StackNavigatorParamList } from "../types";
+
+import { AccountButton } from "./AccountButton";
 
 export * from "./AddAccountHeaderButton";
 
 export const AccountsScreen = (): JSX.Element => {
   const accounts = useAccounts();
 
-  const navigation =
-    useNavigation<
-      NativeStackNavigationProp<StackNavigatorParamList, ScreenType.Posts>
-    >();
+  const { data } = useUsersQuery({ accounts });
+
+  if (!data) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <ScrollView padding={3}>
       <Column space={2}>
-        {accounts.map((account) => (
-          <Button
-            key={account.user.actor_id}
-            onPress={() => {
-              navigation.navigate(ScreenType.Posts, {
-                instanceUrl: "https://lemmy.ca",
-                listingType: "Subscribed",
-                sort: "TopDay",
-                account,
-              });
-            }}
-          >
-            {account.user.actor_id.replace("https://", "")}
-          </Button>
+        {data.users.map(({ user, account }) => (
+          <AccountButton
+            key={user.my_user.local_user_view.person.actor_id}
+            user={user}
+            account={account}
+          />
         ))}
       </Column>
     </ScrollView>

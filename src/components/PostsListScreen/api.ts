@@ -16,7 +16,6 @@ import { useRefresh } from "../../hooks";
 import { type AccountData, type Overwrite } from "../../types";
 
 type GetPostsQueryOptions = {
-  instanceUrl: string;
   listingType: ListingType;
   sort: SortType;
   communityName?: string;
@@ -32,35 +31,34 @@ type GetPostsQueryResult = Overwrite<
   { data: GetPostsQueryData; refetch: () => Promise<void> }
 >;
 
-type GetPostsQueryKey = {
-  instanceUrl: string;
-  listingType: ListingType;
-  sort: SortType;
-  communityName?: string;
-  id: string;
-};
+type GetPostsQueryKey = GetPostsQueryOptions;
 
 export const queryKeys = {
-  getPosts: ({ instanceUrl, listingType, sort, id }: GetPostsQueryKey) =>
-    ["posts", id, instanceUrl, listingType, sort] as const,
+  getPosts: ({ account, listingType, sort }: GetPostsQueryKey) =>
+    [
+      "posts",
+      account.instanceUrl,
+      account.username,
+      listingType,
+      sort,
+    ] as const,
 } as const;
 
 export const useGetPostsQuery = ({
-  instanceUrl,
   listingType,
   sort,
   communityName,
   account,
 }: GetPostsQueryOptions): GetPostsQueryResult => {
+  console.log(listingType, sort, communityName, account);
   const query = useInfiniteQuery<GetPostsResponse>(
     queryKeys.getPosts({
-      id: account.user.actor_id,
-      instanceUrl,
+      account,
       listingType,
       sort,
     }),
     async ({ pageParam = 1 }) => {
-      const http = new LemmyHttp(instanceUrl);
+      const http = new LemmyHttp(account.instanceUrl);
       return await http.getPosts({
         page: pageParam,
         limit: 10,

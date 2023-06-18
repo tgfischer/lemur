@@ -10,7 +10,6 @@ import { type AccountData } from "../types";
 export type IconType = keyof typeof Ionicons.glyphMap;
 
 type PostsScreenParams = {
-  instanceUrl: string;
   listingType: ListingType;
   sort: SortType;
   communityName?: string;

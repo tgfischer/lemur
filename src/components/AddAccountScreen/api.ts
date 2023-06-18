@@ -37,11 +37,7 @@ export const useAddAccountMutation = (): UseMutationResult<
         throw new Error("Invalid login");
       }
 
-      const result = await http.getPersonDetails({
-        username: `${username}@${instanceUrl.replace("https://", "")}`,
-      });
-
-      addAccount({ jwt, user: result.person_view.person });
+      addAccount({ jwt, instanceUrl, username });
     },
     {
       onSuccess: () => {

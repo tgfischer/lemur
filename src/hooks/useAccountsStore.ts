@@ -16,14 +16,17 @@ export const useAccountsStore = create<AccountsStoreState>()(
       addAccount: (newAccount: AccountData) => {
         set((state) => {
           const includesAccount = state.accounts.some(
-            ({ user }) => user.actor_id === newAccount.user.actor_id,
+            ({ instanceUrl, username }) =>
+              instanceUrl === newAccount.instanceUrl &&
+              username === newAccount.username,
           );
 
           if (includesAccount) {
             return {
               ...state,
               accounts: state.accounts.map((account) =>
-                account.user.actor_id === newAccount.user.actor_id
+                account.instanceUrl === newAccount.instanceUrl &&
+                account.username === newAccount.username
                   ? newAccount
                   : account,
               ),
