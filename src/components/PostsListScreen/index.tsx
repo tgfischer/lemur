@@ -3,7 +3,7 @@ import { Divider, Row, useColorMode } from "native-base";
 import { useRef, useEffect } from "react";
 import { RefreshControl, ActivityIndicator, FlatList } from "react-native";
 
-import { type FeedStackParamList, type ScreenType } from "../types";
+import { type StackNavigatorParamList, type ScreenType } from "../types";
 
 import { useGetPostsQuery } from "./api";
 import { PostCard } from "./PostCard";
@@ -11,7 +11,7 @@ import { PostCard } from "./PostCard";
 export * from "./PostsListHeaderSortButton";
 
 type PostsListScreenProps = NativeStackScreenProps<
-  FeedStackParamList,
+  StackNavigatorParamList,
   ScreenType.Posts
 >;
 

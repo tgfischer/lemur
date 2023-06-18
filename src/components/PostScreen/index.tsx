@@ -9,14 +9,14 @@ import {
 } from "react-native";
 
 import { type Tree } from "../../types";
-import { type ScreenType, type FeedStackParamList } from "../types";
+import { type ScreenType, type StackNavigatorParamList } from "../types";
 
 import { type CommentViewData, useGetCommentsQuery } from "./api";
 import { Comment } from "./Comment";
 import { PostMasthead } from "./PostMasthead";
 
 type PostScreenProps = NativeStackScreenProps<
-  FeedStackParamList,
+  StackNavigatorParamList,
   ScreenType.Post
 >;
 

@@ -5,19 +5,29 @@ import {
   type ListingType,
 } from "lemmy-js-client";
 
+import { type AccountData } from "../types";
+
 export type IconType = keyof typeof Ionicons.glyphMap;
 
+type PostsScreenParams = {
+  instanceUrl: string;
+  listingType: ListingType;
+  sort: SortType;
+  communityName?: string;
+  account: AccountData;
+};
+
 export enum ScreenType {
+  PostsStack = "PostsStack",
   Posts = "Posts",
   Post = "Post",
+  Accounts = "Accounts",
+  AddAccount = "AddAccount",
 }
 
-export type FeedStackParamList = {
-  Posts: {
-    instanceUrl: string;
-    listingType: ListingType;
-    sort: SortType;
-    communityName?: string;
-  };
+export type StackNavigatorParamList = {
+  Accounts: undefined;
+  AddAccount: undefined;
+  Posts: PostsScreenParams;
   Post: { view: PostView };
 };

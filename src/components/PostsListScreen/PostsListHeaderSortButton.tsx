@@ -13,11 +13,12 @@ import {
   Actionsheet,
   useDisclose,
   ScrollView,
+  View,
 } from "native-base";
 
 import {
   type IconType,
-  type FeedStackParamList,
+  type StackNavigatorParamList,
   type ScreenType,
 } from "../types";
 
@@ -39,20 +40,20 @@ export const PostsListHeaderSortButton = (): JSX.Element => {
   const theme = useTheme();
 
   const { params } =
-    useRoute<RouteProp<FeedStackParamList, ScreenType.Posts>>();
+    useRoute<RouteProp<StackNavigatorParamList, ScreenType.Posts>>();
 
   const navigation =
-    useNavigation<NavigationProp<FeedStackParamList, ScreenType.Posts>>();
+    useNavigation<NavigationProp<StackNavigatorParamList, ScreenType.Posts>>();
 
   const { isOpen, onOpen, onClose } = useDisclose();
 
   return (
-    <>
+    <View>
       <IconButton
         icon={
           <Ionicons
             name={sortToIcon[params.sort]}
-            size={20}
+            size={22}
             color={theme.colors.gray[100]}
           />
         }
@@ -78,6 +79,6 @@ export const PostsListHeaderSortButton = (): JSX.Element => {
           </ScrollView>
         </Actionsheet.Content>
       </Actionsheet>
-    </>
+    </View>
   );
 };

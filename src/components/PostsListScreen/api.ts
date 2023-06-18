@@ -13,13 +13,14 @@ import {
 import { useMemo } from "react";
 
 import { useRefresh } from "../../hooks";
-import { type Overwrite } from "../../types";
+import { type AccountData, type Overwrite } from "../../types";
 
 type GetPostsQueryOptions = {
   instanceUrl: string;
   listingType: ListingType;
   sort: SortType;
   communityName?: string;
+  account: AccountData;
 };
 
 type GetPostsQueryData = InfiniteData<GetPostsResponse> & {
@@ -31,9 +32,17 @@ type GetPostsQueryResult = Overwrite<
   { data: GetPostsQueryData; refetch: () => Promise<void> }
 >;
 
+type GetPostsQueryKey = {
+  instanceUrl: string;
+  listingType: ListingType;
+  sort: SortType;
+  communityName?: string;
+  id: string;
+};
+
 export const queryKeys = {
-  getPosts: ({ instanceUrl, listingType, sort }: GetPostsQueryOptions) =>
-    ["posts", instanceUrl, listingType, sort] as const,
+  getPosts: ({ instanceUrl, listingType, sort, id }: GetPostsQueryKey) =>
+    ["posts", id, instanceUrl, listingType, sort] as const,
 } as const;
 
 export const useGetPostsQuery = ({
@@ -41,9 +50,15 @@ export const useGetPostsQuery = ({
   listingType,
   sort,
   communityName,
+  account,
 }: GetPostsQueryOptions): GetPostsQueryResult => {
   const query = useInfiniteQuery<GetPostsResponse>(
-    queryKeys.getPosts({ instanceUrl, listingType, sort }),
+    queryKeys.getPosts({
+      id: account.user.actor_id,
+      instanceUrl,
+      listingType,
+      sort,
+    }),
     async ({ pageParam = 1 }) => {
       const http = new LemmyHttp(instanceUrl);
       return await http.getPosts({
@@ -52,6 +67,7 @@ export const useGetPostsQuery = ({
         type_: listingType,
         sort,
         community_name: communityName,
+        auth: account.jwt,
       });
     },
     {
