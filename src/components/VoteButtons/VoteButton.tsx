@@ -5,9 +5,16 @@ import { IconButton, useTheme } from "native-base";
 type VoteButtonProps = {
   arrow: "up" | "down";
   color: "orange" | "blue";
+  onPress: () => void;
+  highlighted: boolean;
 };
 
-export const VoteButton = ({ arrow, color }: VoteButtonProps): JSX.Element => {
+export const VoteButton = ({
+  arrow,
+  color,
+  onPress,
+  highlighted,
+}: VoteButtonProps): JSX.Element => {
   const { colors } = useTheme();
   return (
     <IconButton
@@ -19,6 +26,8 @@ export const VoteButton = ({ arrow, color }: VoteButtonProps): JSX.Element => {
           color={colors.gray[100]}
         />
       }
+      variant={highlighted ? "solid" : undefined}
+      onPress={onPress}
       onPressIn={() => {
         void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       }}

@@ -16,6 +16,10 @@ type PostsScreenParams = {
   account: AccountData;
 };
 
+type PostScreenParams = PostsScreenParams & {
+  view: PostView;
+};
+
 export enum ScreenType {
   PostsStack = "PostsStack",
   Posts = "Posts",
@@ -28,5 +32,5 @@ export type StackNavigatorParamList = {
   Accounts: undefined;
   AddAccount: undefined;
   Posts: PostsScreenParams;
-  Post: { view: PostView };
+  Post: PostScreenParams;
 };

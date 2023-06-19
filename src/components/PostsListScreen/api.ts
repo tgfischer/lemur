@@ -12,6 +12,7 @@ import {
 } from "lemmy-js-client";
 import { useMemo } from "react";
 
+import { queryKeys } from "../../api/queryKeys";
 import { useRefresh } from "../../hooks";
 import { type AccountData, type Overwrite } from "../../types";
 
@@ -31,26 +32,12 @@ type GetPostsQueryResult = Overwrite<
   { data: GetPostsQueryData; refetch: () => Promise<void> }
 >;
 
-type GetPostsQueryKey = GetPostsQueryOptions;
-
-export const queryKeys = {
-  getPosts: ({ account, listingType, sort }: GetPostsQueryKey) =>
-    [
-      "posts",
-      account.instanceUrl,
-      account.username,
-      listingType,
-      sort,
-    ] as const,
-} as const;
-
 export const useGetPostsQuery = ({
   listingType,
   sort,
   communityName,
   account,
 }: GetPostsQueryOptions): GetPostsQueryResult => {
-  console.log(listingType, sort, communityName, account);
   const query = useInfiniteQuery<GetPostsResponse>(
     queryKeys.getPosts({
       account,

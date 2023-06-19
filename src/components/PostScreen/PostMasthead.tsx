@@ -1,3 +1,4 @@
+import { type RouteProp, useRoute } from "@react-navigation/native";
 import { type PostView } from "lemmy-js-client";
 import { Column, Divider, Flex, Row, Stack } from "native-base";
 
@@ -5,6 +6,7 @@ import { timeAgo } from "../../utilities";
 import { IconText } from "../IconText";
 import { PostTextBody } from "../PostTextBody";
 import { PostThumbnail } from "../PostThumbnail";
+import { type ScreenType, type StackNavigatorParamList } from "../types";
 import { Username } from "../Username";
 import { UpvoteButton, DownvoteButton } from "../VoteButtons";
 
@@ -16,6 +18,9 @@ type PostMastheadProps = {
 };
 
 export const PostMasthead = ({ view }: PostMastheadProps): JSX.Element => {
+  const { params } =
+    useRoute<RouteProp<StackNavigatorParamList, ScreenType.Post>>();
+
   return (
     <Stack>
       <PostHeader {...view} />
@@ -41,8 +46,20 @@ export const PostMasthead = ({ view }: PostMastheadProps): JSX.Element => {
         </Column>
         <Row>
           <MoreActionsButton />
-          <UpvoteButton />
-          <DownvoteButton />
+          <UpvoteButton
+            postId={view.post.id}
+            account={params.account}
+            vote={view.my_vote}
+            listingType={params.listingType}
+            sort={params.sort}
+          />
+          <DownvoteButton
+            postId={view.post.id}
+            account={params.account}
+            vote={view.my_vote}
+            listingType={params.listingType}
+            sort={params.sort}
+          />
         </Row>
       </Flex>
       <Divider _dark={{ backgroundColor: "dark.100" }} height={1.5} />

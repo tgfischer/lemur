@@ -1,9 +1,13 @@
-import { useLinkProps } from "@react-navigation/native";
+import {
+  type RouteProp,
+  useLinkProps,
+  useRoute,
+} from "@react-navigation/native";
 import { type PostView } from "lemmy-js-client";
 import { type PropsWithChildren } from "react";
 import { TouchableHighlight } from "react-native";
 
-import { ScreenType } from "../../types";
+import { ScreenType, type StackNavigatorParamList } from "../../types";
 
 type PostCardLinkProps = PropsWithChildren<{ view: PostView }>;
 
@@ -11,8 +15,11 @@ export const PostCardLink = ({
   view,
   children,
 }: PostCardLinkProps): JSX.Element => {
-  const { onPress, ...props } = useLinkProps({
-    to: { screen: ScreenType.Post, params: { view } },
+  const { params } =
+    useRoute<RouteProp<StackNavigatorParamList, ScreenType.Posts>>();
+
+  const { onPress, ...props } = useLinkProps<StackNavigatorParamList>({
+    to: { screen: ScreenType.Post, params: { ...params, view } },
   });
 
   return (
