@@ -20,10 +20,11 @@ export const ImageThumbnail = ({ post }: PostThumbnailProps): JSX.Element => {
           <View flex={1}>
             <ImageBackground
               source={{ uri: post.url, cache: "force-cache" }}
+              alt={post.name}
               onLoad={() => {
                 setLoaded(true);
               }}
-              blurRadius={post.nsfw ? 100 : undefined}
+              blurRadius={post.nsfw ? 25 : undefined}
               style={styles.image}
               resizeMode="contain"
             >

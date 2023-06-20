@@ -29,7 +29,7 @@ export const VoteButton = ({
       variant={highlighted ? "solid" : undefined}
       onPress={onPress}
       onPressIn={() => {
-        void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
       }}
     />
   );

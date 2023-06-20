@@ -1,4 +1,4 @@
-import { ScrollView, Column } from "native-base";
+import { ScrollView, Column, Row } from "native-base";
 import { ActivityIndicator } from "react-native";
 
 import { useUsersQuery } from "../../api";
@@ -14,7 +14,11 @@ export const AccountsScreen = (): JSX.Element => {
   const { data } = useUsersQuery({ accounts });
 
   if (!data) {
-    return <ActivityIndicator />;
+    return (
+      <Row p={2} justifyContent="center">
+        <ActivityIndicator />
+      </Row>
+    );
   }
 
   return (

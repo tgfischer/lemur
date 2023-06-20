@@ -1,5 +1,5 @@
 import { type PostView } from "lemmy-js-client";
-import { Heading, Column, Row, Text, Badge, Stack } from "native-base";
+import { Heading, Column, Row, Text, Badge, Stack, Avatar } from "native-base";
 
 import { PostCardLink } from "./PostCardLink";
 
@@ -13,7 +13,12 @@ export const PostCardHeader = (props: PostCardHeaderProps): JSX.Element => {
           {props.post.name}
         </Heading>
         <Stack space={1}>
-          <Row>
+          <Row space={1} alignItems="center">
+            {props.community.icon && (
+              <Avatar source={{ uri: props.community.icon }} size={5}>
+                {props.community.icon}
+              </Avatar>
+            )}
             <Text
               _light={{ color: "muted.600" }}
               _dark={{ color: "muted.400" }}

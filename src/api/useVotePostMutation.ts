@@ -44,10 +44,14 @@ export const useVotePostMutation = ({
       score: vote === "up" ? 1 : vote === "down" ? -1 : 0,
     });
 
+    queryClient.setQueryData<PostView>(
+      queryKeys.getPost({ account, postId }),
+      result.post_view,
+    );
+
     queryClient.setQueryData<InfiniteData<GetPostsResponse>>(
       queryKeys.getPosts({ account, listingType, sort }),
       (state) => {
-        console.log(">>>>>>>", state);
         if (!state) {
           return { pages: [], pageParams: [] };
         }

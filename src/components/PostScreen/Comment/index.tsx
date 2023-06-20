@@ -50,7 +50,10 @@ const CommentInner = ({ tree, level }: CommentProps): JSX.Element => {
             padding={2.5}
           >
             <Row alignItems="center" justifyContent="space-between">
-              <Username creator={tree.value.creator} />
+              <Username
+                creator={tree.value.creator}
+                op={tree.value.creator.id === tree.value.post.creator_id}
+              />
               <Row alignItems="center" space={2.5}>
                 <IconText icon="ios-arrow-up">
                   {tree.value.counts.score}

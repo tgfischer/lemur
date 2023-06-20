@@ -11,7 +11,11 @@ import {
 import { type Tree } from "../../types";
 import { type ScreenType, type StackNavigatorParamList } from "../types";
 
-import { type CommentViewData, useGetCommentsQuery } from "./api";
+import {
+  type CommentViewData,
+  useGetCommentsQuery,
+  useGetPostQuery,
+} from "./api";
 import { Comment } from "./Comment";
 import { PostMasthead } from "./PostMasthead";
 
@@ -32,12 +36,16 @@ export const PostScreen = ({ route }: PostScreenProps): JSX.Element | null => {
 
   const postId = route.params.view.post.id;
 
-  const { data, isRefetching, isInitialLoading, isFetchingNextPage } =
-    useGetCommentsQuery({ postId });
+  const postQuery = useGetPostQuery({
+    account: route.params.account,
+    view: route.params.view,
+  });
+
+  const commentsQuery = useGetCommentsQuery({ postId });
 
   const comments = useMemo(() => {
-    return data?.pages.flatMap((comments) => comments) ?? [];
-  }, [data?.pages]);
+    return commentsQuery.data?.pages.flatMap((comments) => comments) ?? [];
+  }, [commentsQuery.data?.pages]);
 
   const colorMode = theme.colorMode === "dark" ? "white" : "default";
 
@@ -45,15 +53,19 @@ export const PostScreen = ({ route }: PostScreenProps): JSX.Element | null => {
     <FlatList
       indicatorStyle={colorMode}
       refreshControl={
-        <RefreshControl refreshing={isRefetching} tintColor={colorMode} />
+        <RefreshControl
+          refreshing={postQuery.isRefetching || commentsQuery.isRefetching}
+          tintColor={colorMode}
+        />
       }
       data={comments}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       onEndReachedThreshold={0.5}
-      ListHeaderComponent={<PostMasthead view={route.params.view} />}
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      ListHeaderComponent={<PostMasthead view={postQuery.data!} />}
       ListFooterComponent={
-        isInitialLoading || isFetchingNextPage ? (
+        commentsQuery.isInitialLoading || commentsQuery.isFetchingNextPage ? (
           <Row p={2} justifyContent="center">
             <ActivityIndicator />
           </Row>

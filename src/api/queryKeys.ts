@@ -2,6 +2,11 @@ import { type ListingType, type SortType } from "lemmy-js-client";
 
 import { type AccountData } from "../types";
 
+type GetPostQueryKey = {
+  account: AccountData;
+  postId: number;
+};
+
 type GetPostsQueryKey = {
   listingType: ListingType;
   sort: SortType;
@@ -9,9 +14,18 @@ type GetPostsQueryKey = {
   account: AccountData;
 };
 
+type GetCommentsQueryKey = {
+  type: ListingType;
+  postId: number;
+  limit: number;
+  maxDepth: number;
+};
+
 export const queryKeys = {
-  getUser: (jwt: string) => ["user", jwt],
-  getUsers: (jwts: string[]) => ["user", jwts],
+  getUser: (jwt: string) => ["user", jwt] as const,
+  getUsers: (jwts: string[]) => ["user", jwts] as const,
+  getPost: ({ account, postId }: GetPostQueryKey) =>
+    ["post", account.instanceUrl, account.username, postId] as const,
   getPosts: ({ account, listingType, sort }: GetPostsQueryKey) =>
     [
       "posts",
@@ -20,4 +34,6 @@ export const queryKeys = {
       listingType,
       sort,
     ] as const,
+  getComments: ({ type, postId, limit, maxDepth }: GetCommentsQueryKey) =>
+    ["comments", postId, type, limit, maxDepth] as const,
 } as const;

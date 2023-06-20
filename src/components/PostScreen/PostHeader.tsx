@@ -1,5 +1,5 @@
 import { type PostView } from "lemmy-js-client";
-import { Heading, Column, Row, Text } from "native-base";
+import { Heading, Column, Row, Text, Badge } from "native-base";
 
 type PostHeaderProps = PostView;
 
@@ -17,6 +17,15 @@ export const PostHeader = ({
           {community.actor_id.replace("https://", "")}
         </Text>
       </Row>
+      {post.nsfw && (
+        <Row>
+          <Badge colorScheme="danger" variant="solid">
+            <Text fontSize={10} color="white">
+              NSFW
+            </Text>
+          </Badge>
+        </Row>
+      )}
     </Column>
   );
 };

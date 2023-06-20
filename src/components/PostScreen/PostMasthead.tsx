@@ -33,7 +33,10 @@ export const PostMasthead = ({ view }: PostMastheadProps): JSX.Element => {
         justifyContent="space-between"
       >
         <Column>
-          <Username creator={view.creator} />
+          <Username
+            creator={view.creator}
+            op={view.creator.id === view.post.creator_id}
+          />
           <Row alignItems="center" space={2.5}>
             <IconText icon="ios-arrow-up">{view.counts.score}</IconText>
             <IconText icon="ios-chatbox-outline">

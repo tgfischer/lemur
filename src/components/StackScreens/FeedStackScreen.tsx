@@ -28,28 +28,30 @@ export const TabsNavigator = (): JSX.Element => (
   </Tabs.Navigator>
 );
 
-export const StackNavigator = (): JSX.Element => (
-  <Stack.Navigator initialRouteName={ScreenType.Accounts}>
-    <Stack.Screen
-      name={ScreenType.Accounts}
-      component={AccountsScreen}
-      options={{ headerRight: AddAccountHeaderButton }}
-    />
-    <Stack.Screen name={ScreenType.AddAccount} component={AddAccountScreen} />
-    <Stack.Screen
-      name={ScreenType.Posts}
-      component={PostsListScreen}
-      options={({ route }) => ({
-        headerRight: PostsListHeaderSortButton,
-        title: route.params.listingType,
-      })}
-    />
-    <Stack.Screen
-      name={ScreenType.Post}
-      component={PostScreen}
-      options={({ route }) => ({
-        title: `${route.params.view.counts.comments} Comments`,
-      })}
-    />
-  </Stack.Navigator>
-);
+export const StackNavigator = (): JSX.Element => {
+  return (
+    <Stack.Navigator initialRouteName={ScreenType.Accounts}>
+      <Stack.Screen
+        name={ScreenType.Accounts}
+        component={AccountsScreen}
+        options={{ headerRight: AddAccountHeaderButton }}
+      />
+      <Stack.Screen name={ScreenType.AddAccount} component={AddAccountScreen} />
+      <Stack.Screen
+        name={ScreenType.Posts}
+        component={PostsListScreen}
+        options={({ route }) => ({
+          headerRight: PostsListHeaderSortButton,
+          title: route.params.listingType,
+        })}
+      />
+      <Stack.Screen
+        name={ScreenType.Post}
+        component={PostScreen}
+        options={({ route }) => ({
+          title: `${route.params.view.counts.comments} Comments`,
+        })}
+      />
+    </Stack.Navigator>
+  );
+};

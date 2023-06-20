@@ -25,8 +25,7 @@ export const PostsListScreen = ({
   const {
     data,
     isInitialLoading,
-    isFetching,
-    isLoading,
+    isRefetching,
     isFetchingNextPage,
     fetchNextPage,
     refetch,
@@ -44,7 +43,7 @@ export const PostsListScreen = ({
       indicatorStyle={colorMode}
       refreshControl={
         <RefreshControl
-          refreshing={isFetching || isLoading || isFetchingNextPage}
+          refreshing={isRefetching || isInitialLoading}
           tintColor={colorMode}
           onRefresh={() => {
             void refetch();
@@ -55,7 +54,7 @@ export const PostsListScreen = ({
       keyExtractor={(item) => item.post.ap_id}
       renderItem={({ item, index }) => (
         <>
-          <PostCard key={item.post.ap_id} view={item} />
+          <PostCard view={item} />
           {index < data.flattened.length - 1 && (
             <Divider _dark={{ backgroundColor: "dark.100" }} height={1.5} />
           )}

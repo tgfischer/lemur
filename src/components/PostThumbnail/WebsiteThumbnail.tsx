@@ -23,12 +23,12 @@ export const WebsiteThumbnail = ({ post }: PostThumbnailProps): JSX.Element => {
       >
         {post.thumbnail_url && (
           <Row>
-            <AspectRatio w="100%" ratio={4 / 3}>
+            <AspectRatio w="100%" ratio={16 / 9}>
               <Image
                 source={{ uri: post.thumbnail_url, cache: "force-cache" }}
                 blurRadius={post.nsfw ? 100 : undefined}
                 resizeMode="cover"
-                alt={post.embed_description}
+                alt={post.embed_title ?? post.embed_description ?? post.name}
                 borderTopRadius={5}
               />
             </AspectRatio>

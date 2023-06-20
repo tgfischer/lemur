@@ -11,16 +11,29 @@ const UsernameWithAvatar = ({
   ...props
 }: UsernameWithAvatarProps): JSX.Element => (
   <Column flexDirection="row" alignItems="center">
-    {avatar && <Avatar source={{ uri: avatar }} size={3} marginRight={1} />}
+    {avatar && <Avatar source={{ uri: avatar }} size={4} marginRight={1} />}
     <Text {...props}>{children}</Text>
   </Column>
 );
 
 type UsernameProps = {
   creator: Person;
+  op?: boolean;
 };
 
-export const Username = ({ creator }: UsernameProps): JSX.Element => {
+export const Username = ({ creator, op }: UsernameProps): JSX.Element => {
+  if (op) {
+    return (
+      <UsernameWithAvatar
+        avatar={creator.avatar}
+        color="blue.500"
+        fontWeight="semibold"
+      >
+        {creator.name}
+      </UsernameWithAvatar>
+    );
+  }
+
   if (creator.admin) {
     return (
       <UsernameWithAvatar
@@ -37,7 +50,7 @@ export const Username = ({ creator }: UsernameProps): JSX.Element => {
     return (
       <UsernameWithAvatar
         avatar={creator.avatar}
-        color="blue.600"
+        color="purple.500"
         fontWeight="semibold"
       >
         {creator.name}
